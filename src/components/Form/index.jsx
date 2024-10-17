@@ -12,38 +12,34 @@ const Form = () => {
     });
     const [errors, setErrors] = useState({});
 
-    // Função para obter o ano atual
-    const getCurrentYear = () => new Date().getFullYear().toString().slice(-2); // Retorna os últimos 2 dígitos do ano
+    const getCurrentYear = () => new Date().getFullYear().toString().slice(-2);
 
-    // Função para validar o formulário
     const validateForm = () => {
         const newErrors = {};
 
-        // Limpar o número do cartão (remover espaços e outros caracteres não numéricos)
         const sanitizedNumber = inputValues.number.replace(/\D/g, '');
 
-        // Definir a quantidade de dígitos esperada com base no tipo de cartão
-        let maxLength = 16; // Valor padrão para a maioria dos cartões
+        let maxLength = 16; 
 
-        // Ajustar a quantidade de dígitos esperada com base no tipo de cartão
+        
         if (sanitizedNumber.startsWith('34') || sanitizedNumber.startsWith('37')) {
-            maxLength = 15; // Amex
+            maxLength = 15; 
         } else if (sanitizedNumber.startsWith('36') || sanitizedNumber.startsWith('38')) {
-            maxLength = 14; // Diners Club
-        } // Você pode adicionar mais regras de acordo com outros tipos de cartões
+            maxLength = 14; 
+        } 
 
-        // Verificar se o número tem a quantidade correta de dígitos
+        
         if (sanitizedNumber.length !== maxLength) {
             newErrors.number = `Card number must be ${maxLength} digits.`;
         }
 
-        // Validar data de expiração
+        
         const expDateValidation = cardValidator.expirationDate(inputValues.expDate);
         if (!expDateValidation.isValid) {
             newErrors.expDate = 'Invalid expiration date';
         }
 
-        // Validar CVC
+        
         const cvcValidation = cardValidator.cvv(inputValues.cvc);
         if (!cvcValidation.isValid) {
             newErrors.cvc = 'CVC must be 3 digits';
@@ -63,7 +59,7 @@ const Form = () => {
         if (name === 'number') {
             let sanitizedNumber = value.replace(/\D/g, '');
 
-            // Validar o número do cartão e detectar o tipo
+            
             const cardValidation = cardValidator.number(sanitizedNumber);
 
             let maxLength = 16;
@@ -108,14 +104,14 @@ const Form = () => {
             return;
         }
 
-        // Validação e formatação para expDate (MM/YY)
+        
         if (name === 'expDate') {
-            let formattedExpDate = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            let formattedExpDate = value.replace(/\D/g, ''); 
             if (formattedExpDate.length >= 3) {
                 formattedExpDate = formattedExpDate.slice(0, 2) + '/' + formattedExpDate.slice(2, 4);
             }
 
-            // Validar o mês e o ano
+            
             const [month, year] = formattedExpDate.split('/');
             const currentYear = getCurrentYear();
 
@@ -148,9 +144,9 @@ const Form = () => {
             return;
         }
 
-        // Validação do CVC (apenas números, máximo de 3 dígitos)
+        
         if (name === 'cvc') {
-            const sanitizedCVC = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            const sanitizedCVC = value.replace(/\D/g, ''); 
 
             if (sanitizedCVC.length > 3) {
                 setErrors((prevState) => ({

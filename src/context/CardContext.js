@@ -1,6 +1,6 @@
 import { createContext, useState, useContext } from "react";
 
-// Criar o contexto do cartão
+
 const CardContext = createContext();
 
 export const CardProvider = ({ children }) => {
@@ -12,7 +12,7 @@ export const CardProvider = ({ children }) => {
     cardType: "default",
   });
 
-  const [confirmed, setConfirmed] = useState(false); // Estado de confirmação
+  const [confirmed, setConfirmed] = useState(false); 
 
   return (
     <CardContext.Provider
@@ -23,5 +23,5 @@ export const CardProvider = ({ children }) => {
   );
 };
 
-// Hook para usar o contexto do cartão
+
 export const useCard = () => useContext(CardContext);
